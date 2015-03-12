@@ -53,7 +53,7 @@ class HttpDouble::RequestLogger
       parsed_input.__send__ sym, *args, &block
     end
 
-    def respond_to_missing?(sym)
+    def respond_to_missing?(sym, *)
       parsed_input.respond_to? sym
     end
 

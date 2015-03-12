@@ -49,12 +49,16 @@ class HttpDouble::RequestLogger
       result
     end
 
-    def method_missing(sym, *args, &block)
-      parsed_input.__send__ sym, *args, &block
+    def method_missing(method_name, *args, &block)
+      if parsed_input.respond_to? method_name
+        parsed_input.__send__ method_name, *args, &block
+      else
+        super
+      end
     end
 
-    def respond_to_missing?(sym, *)
-      parsed_input.respond_to? sym
+    def respond_to_missing?(method_name, *)
+      parsed_input.respond_to? method_name || super
     end
 
     private
